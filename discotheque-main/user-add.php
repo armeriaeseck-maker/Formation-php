@@ -3,7 +3,7 @@
   include('includes/function-pdo.php');
 
   if(!isset($_SESSION['email'])){
-    header('Location: http://sandbox.test/login.php');
+    header('Location: login.php');
   }
 
 ?>
@@ -20,8 +20,8 @@
 if(isset($_POST['password']) ){
     $crypted_password = password_hash($_POST['password'], PASSWORD_BCRYPT );
     $email = $_POST['email'];
-    echo $crypted_password;
-    echo $email;
+ /*    echo $crypted_password;
+    echo $email; */
     $res = addUser($email,$crypted_password,$pdo);
     if($res) { echo 'Création utilisateur réussie';}
 }

@@ -23,10 +23,10 @@ if (count($_POST) > 0) {
     <?php
     include('includes/navbar.php');
     ?>
-    <h1>Page de login</h1>
+    
 
     <div class="container">
-
+    <h1>Page de login</h1>
       <form action="login.php" method="post">
         <div class="form-group">
           <label for="exampleInputEmail1">Email</label>

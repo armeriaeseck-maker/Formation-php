@@ -6,7 +6,7 @@
  // print_r($_SESSION);
 
 if(!isset($_SESSION['email'])){
-  header('Location: http://sandbox.test/login.php');
+  header('Location: http://link.test/login.php');
 }
 // Code pour avoir les informations des disques
 
@@ -31,10 +31,10 @@ function getDisques($pdo){
   <?php
   include('includes/navbar.php');
   ?>
-    <h1>Page de Liste</h1>
+   
 
 <div class="container">
-
+ <h1>Page de Liste</h1>
 <table class="table">
   <thead>
     <tr>
@@ -52,7 +52,7 @@ for($i=0;$i< count($disques);$i++){
 
 ?>
     <tr>
-      <th scope="row"><?=$i?></th>
+      <th scope="row"><?=($i+1)?></th>
       <td><a href="detail.php?idalbum=<?=$disques[$i]['idalbum']?>"><?=$disques[$i]['album']?></a></td>
       <td><?=$disques[$i]['artiste']?></td>
       <td><?=$disques[$i]['genre']?></td>
