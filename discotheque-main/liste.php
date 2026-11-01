@@ -42,6 +42,8 @@ function getDisques($pdo){
       <th scope="col">Album</th>
       <th scope="col">Artiste</th>
       <th scope="col">Genre</th>
+      <th scope="col">Action</th>
+
     </tr>
   </thead>
   <tbody>
@@ -53,9 +55,16 @@ for($i=0;$i< count($disques);$i++){
 ?>
     <tr>
       <th scope="row"><?=($i+1)?></th>
-      <td><a href="detail.php?idalbum=<?=$disques[$i]['idalbum']?>"><?=$disques[$i]['album']?></a></td>
+      <td><a href="detail.php?idalbum=<?=$disques[$i]['idalbum']?>&artiste=<?=$disques[$i]['artiste']?>&album=<?=$disques[$i]['album']?>"><?=$disques[$i]['album']?></a></td>
       <td><?=$disques[$i]['artiste']?></td>
       <td><?=$disques[$i]['genre']?></td>
+<!--       <td><a href="edit_album.php?idalbum=<?=$disques[$i]['idalbum']?>">Editer Album</a></td>
+ -->
+<td>
+    <a href="edit_album.php?idalbum=<?php echo $disques[$i]['idalbum']; ?>">
+        Editer Album
+    </a>
+</td>
     </tr>
 <?php
 
