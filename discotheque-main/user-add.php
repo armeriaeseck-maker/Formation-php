@@ -27,15 +27,7 @@ if(isset($_POST['password']) ){
 }
 
 
-//insertion dans la base de donnée
-function addUser($email,$password,$pdo){
 
-    $sql = "INSERT INTO utilisateurs (email,password) VALUES (:email,:password)";
-    $stmt = $pdo->prepare($sql);
-    $params = ['email' => $email,'password' => $password];
-    $result = $stmt->execute($params);
-    return $result;
-  }
   ?>
 
 

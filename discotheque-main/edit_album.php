@@ -11,9 +11,9 @@ if(!isset($_SESSION['email'])){
 //recuellirl'idalbum via $_GET(barre d'adresse)
 if(isset($_GET['idalbum'])){
        $idalbum = $_GET['idalbum'];
-       $result = getAlbum($idalbum,$pdo);
-    
+       $result = getAlbum($idalbum,$pdo); 
 }
+$genres = getGenre($pdo);
 // recuellir les données postées par le formulaire
 if(isset($_POST) && !empty($_POST)){
 $album = $_POST['album'];
@@ -25,36 +25,6 @@ header('Location: liste.php');
 exit; 
 }
 
-function getAlbum($idalbum,$pdo){
-echo "Album trouvé"; 
-  $sql = "SELECT album, artiste, genre FROM disques WHERE id = :idalbum";
-  $stmt = $pdo->prepare($sql);
-  $params = ['idalbum' => $idalbum];
-  $stmt->execute( $params);
-  $result = $stmt->fetch(PDO::FETCH_ASSOC);
- 
-  return $result;
-}
-
-function editAlbum($idalbum,$album,$artiste,$genre,$pdo){
-echo "Album inséré"; 
-
-$sql = "UPDATE disques 
-SET album = :album, artiste = :artiste, genre = :genre
- WHERE id = :idalbum;"; 
-
-$stmt = $pdo->prepare($sql);// prépare la requêtte SQl
-$params = [
-        'idalbum' => $idalbum,
-       'album'=> $album,
-       'artiste'=> $artiste,
-       'genre'=> $genre
-       ] ;
-       // les paramètres à mettre dans la requête SQL
-
-       $result = $stmt -> execute($params); 
-       return $result;
-}
 
 ?>
 <body>
@@ -75,11 +45,21 @@ $params = [
         </div>
         <div class="form-group">
           <label for="exampleInputtitre">Genre</label>
-          <select class="form-control" name="genre" >
-              <option value="1"<?= $result ['genre'] == 1 ? 'selected' : '' ?>>Rock</option>
-              <option value="2" <?= $result ['genre'] == 2 ? 'selected' : '' ?>>Hard Rock</option>
-              <option value="3"<?= $result ['genre'] == 3 ? 'selected' : ''  ?>>Country Rock</option>
-          </select>
+<select class="form-control" name="genre">
+
+<?php
+for($j=0; $j < count($genres); $j++){
+?>
+    <option
+        value="<?= $genres[$j]['id'] ?>"
+        <?= $result['genre'] == $genres[$j]['id'] ? 'selected' : '' ?>>
+        <?= $genres[$j]['genre'] ?>
+    </option>
+<?php
+}
+?>
+
+</select>
         </div>
         <input type="hidden" name="idalbum" value="<?= $idalbum?>">
         <button type="submit" class="btn btn-primary">Editer</button>

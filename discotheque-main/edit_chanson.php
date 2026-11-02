@@ -9,51 +9,27 @@ if(!isset($_SESSION['email'])){
   header('Location: login.php');
 }
 //recuellirl'idalbum via $_GET(barre d'adresse)
-if(isset($_GET['idalbum'])){
-       $idalbum = $_GET['idalbum'];
-       $result = getAlbum($idalbum,$pdo);
-    
+if(isset($_GET['idchanson'])){
+       $idchanson = $_GET['idchanson'];
+         $artiste = $_GET['artiste'];
+           $album = $_GET['album'];
+             $idalbum = $_GET['idalbum'];
+
+
+       $result = getchanson($idchanson,$pdo);
+   // print_r($result);
 }
 // recuellir les données postées par le formulaire
 if(isset($_POST) && !empty($_POST)){
-$album = $_POST['album'];
+$idchanson = $_POST['idchanson'];
+$titre = $_POST['titre'];
 $artiste = $_POST['artiste'];
-$genre = $_POST['genre'];
+$album = $_POST['album'];
 $idalbum = $_POST['idalbum'];
-$resulte = editAlbum($idalbum,$album,$artiste,$genre,$pdo);
-header('Location: liste.php');
+
+$resulte = editchanson($idchanson,$titre,$pdo);
+header("Location: detail.php?idalbum=$idalbum&artiste=$artiste&album=$album");
 exit; 
-}
-
-function getAlbum($idalbum,$pdo){
-echo "Album trouvé"; 
-  $sql = "SELECT album, artiste, genre FROM disques WHERE id = :idalbum";
-  $stmt = $pdo->prepare($sql);
-  $params = ['idalbum' => $idalbum];
-  $stmt->execute( $params);
-  $result = $stmt->fetch(PDO::FETCH_ASSOC);
- 
-  return $result;
-}
-
-function editAlbum($idalbum,$album,$artiste,$genre,$pdo){
-echo "Album inséré"; 
-
-$sql = "UPDATE disques 
-SET album = :album, artiste = :artiste, genre = :genre
- WHERE id = :idalbum;"; 
-
-$stmt = $pdo->prepare($sql);// prépare la requêtte SQl
-$params = [
-        'idalbum' => $idalbum,
-       'album'=> $album,
-       'artiste'=> $artiste,
-       'genre'=> $genre
-       ] ;
-       // les paramètres à mettre dans la requête SQL
-
-       $result = $stmt -> execute($params); 
-       return $result;
 }
 
 ?>
@@ -63,26 +39,18 @@ $params = [
     ?>
 
     <div class="container">
-    <h1>Edition d'un album</h1>
-      <form action="edit_album.php" method="post">
+    <h1>Edition d'une chanson</h1>
+      <form action="edit_chanson.php" method="post">
         <div class="form-group">
-          <label for="exampleInputtitre">Album</label>
-          <input required type="text" class="form-control" name="album" value="<?= $result['album']?>">
-        </div>
-          <div class="form-group">
-          <label for="exampleInputtitre">Artiste</label>
-          <input required type="text" class="form-control" name="artiste" value="<?= $result['artiste']?>">
-        </div>
+          <label for="exampleInputtitre">Titre</label>
+          <input required type="text" class="form-control" name="titre" value="<?= $result['titre']?>"> 
         <div class="form-group">
-          <label for="exampleInputtitre">Genre</label>
-          <select class="form-control" name="genre" >
-              <option value="1"<?= $result ['genre'] == 1 ? 'selected' : '' ?>>Rock</option>
-              <option value="2" <?= $result ['genre'] == 2 ? 'selected' : '' ?>>Hard Rock</option>
-              <option value="3"<?= $result ['genre'] == 3 ? 'selected' : ''  ?>>Country Rock</option>
-          </select>
-        </div>
-        <input type="hidden" name="idalbum" value="<?= $idalbum?>">
-        <button type="submit" class="btn btn-primary">Editer</button>
+        
+        <input type="hidden" name="idchanson" value="<?= $idchanson?>">
+        <input type="hidden" name="artiste" value="<?= $artiste?>">
+        <input type="hidden" name="album" value="<?= $album?>">
+          <input type="hidden" name="idalbum" value="<?= $idalbum?>">
+        <button type="submit" class="btn btn-primary">Mettre à jour</button>
       </form>
     </div>
 

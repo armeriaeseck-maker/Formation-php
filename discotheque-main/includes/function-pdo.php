@@ -24,3 +24,144 @@ function isValid($email, $password, $pdo)
 
     return false;
 }
+
+function getGenre($pdo){
+$sql = "SELECT * FROM genre"; 
+  $stmt = $pdo->prepare($sql);
+  $stmt->execute();
+  $genres = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  return $genres;
+}
+
+
+function getAlbum($idalbum,$pdo){
+echo "Album trouvé"; 
+  $sql = "SELECT album, artiste, genre FROM disques WHERE id = :idalbum";
+  $stmt = $pdo->prepare($sql);
+  $params = ['idalbum' => $idalbum];
+  $stmt->execute( $params);
+  $result = $stmt->fetch(PDO::FETCH_ASSOC);
+ 
+  return $result;
+}
+
+function editAlbum($idalbum,$album,$artiste,$genre,$pdo){
+echo "Album inséré"; 
+
+$sql = "UPDATE disques 
+SET album = :album, artiste = :artiste, genre = :genre
+ WHERE id = :idalbum;"; 
+
+$stmt = $pdo->prepare($sql);// prépare la requêtte SQl
+$params = [
+        'idalbum' => $idalbum,
+       'album'=> $album,
+       'artiste'=> $artiste,
+       'genre'=> $genre
+       ] ;
+       // les paramètres à mettre dans la requête SQL
+
+       $result = $stmt -> execute($params); 
+       return $result;
+}
+
+function getchanson($idchanson,$pdo){
+echo "Album trouvé"; 
+  $sql = "SELECT titre FROM chanson WHERE id = :idchanson";
+  $stmt = $pdo->prepare($sql);
+  $params = ['idchanson' => $idchanson];
+  $stmt->execute( $params);
+  $result = $stmt->fetch(PDO::FETCH_ASSOC);
+ 
+  return $result;
+}
+
+function editchanson($idchanson,$titre,$pdo){
+    echo "Chanson éditée";
+
+    $sql = "UPDATE chanson
+            SET titre = :titre
+            WHERE id = :idchanson";
+
+    $params = [
+        'titre' => $titre,
+        'idchanson' => $idchanson
+    ];// les paramètre pour mettre à jour les requêtes SQL
+
+    $stmt = $pdo->prepare($sql);
+    $result = $stmt->execute($params);
+    print_r($stmt->errorInfo());
+  
+    return $result;
+}
+
+
+function addAlbum($album,$artiste,$genre,$pdo){
+echo "Album inséré"; 
+$sql = "INSERT INTO `disques` ( `album`, `artiste`, `genre`) 
+VALUES ( :album,:artiste,:genre);"; 
+$stmt = $pdo->prepare($sql);// prépare la requêtte SQl
+$params = [
+       'album'=> $album,
+       'artiste'=> $artiste,
+       'genre'=> $genre
+       ] ;
+       // les paramètres à mettre dans la requête SQL
+
+       $result = $stmt -> execute($params); 
+       return $result;
+}
+
+
+function addChanson($idalbum,$titre,$pdo){
+echo "Chanson insérée"; 
+$sql = "INSERT INTO `chanson` ( `idalbum`, `titre`) 
+VALUES ( :idalbum,:titre);"; 
+$stmt = $pdo->prepare($sql);// prépare la requêtte SQl
+$params = [
+       'idalbum'=> $idalbum,
+       'titre'=> $titre,
+     
+       ] ;
+       // les paramètres à mettre dans la requête SQL
+
+       $result = $stmt -> execute($params); 
+       return $result;
+}
+
+
+function effacerAlbum($idalbum,$pdo){
+    echo "Album éffacé";
+    $sql = "DELETE FROM disques  WHERE id = :idalbum;DELETE FROM chanson  WHERE idalbum = :idalbum;";
+   
+    $params = [    
+        'idalbum' => $idalbum,
+    ];// les paramètre pour mettre à jour les requêtes SQL
+
+    $stmt = $pdo->prepare($sql);
+    $result = $stmt->execute($params);
+    return $result;
+}
+
+
+function effacerchanson($idchanson,$pdo){
+    echo "Chanson éffacé";
+    $sql = "DELETE FROM chanson  WHERE id = :idchanson;";
+    $params = [    
+        'idchanson' => $idchanson,
+    ];// les paramètre pour mettre à jour les requêtes SQL
+
+    $stmt = $pdo->prepare($sql);
+    $result = $stmt->execute($params);
+    return $result;
+}
+
+//insertion dans la base de donnée
+function addUser($email,$password,$pdo){
+
+    $sql = "INSERT INTO utilisateurs (email,password) VALUES (:email,:password)";
+    $stmt = $pdo->prepare($sql);
+    $params = ['email' => $email,'password' => $password];
+    $result = $stmt->execute($params);
+    return $result;
+  }

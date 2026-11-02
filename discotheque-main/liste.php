@@ -58,11 +58,17 @@ for($i=0;$i< count($disques);$i++){
       <td><a href="detail.php?idalbum=<?=$disques[$i]['idalbum']?>&artiste=<?=$disques[$i]['artiste']?>&album=<?=$disques[$i]['album']?>"><?=$disques[$i]['album']?></a></td>
       <td><?=$disques[$i]['artiste']?></td>
       <td><?=$disques[$i]['genre']?></td>
-<!--       <td><a href="edit_album.php?idalbum=<?=$disques[$i]['idalbum']?>">Editer Album</a></td>
- -->
+   <!--  <td><a href="edit_album.php?idalbum=<?=$disques[$i]['idalbum']?>">Editer Album</a></td>
+    <td><a href="effacer_album.php?idalbum=<?=$disques[$i]['idalbum']?>">Effacer Album</a></td> -->
+
 <td>
     <a href="edit_album.php?idalbum=<?php echo $disques[$i]['idalbum']; ?>">
         Editer Album
+    </a>
+</td>
+<td>
+    <a href="effacer_album.php?idalbum=<?php echo $disques[$i]['idalbum']; ?>">
+        Effacer Album
     </a>
 </td>
     </tr>

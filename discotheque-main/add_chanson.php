@@ -25,25 +25,6 @@ $dalbum = $_POST['album'];
 $resulte = addChanson($idalbum,$titre,$pdo);
  header("Location: detail.php?idalbum=$idalbum&artiste=$artiste&album=$album");
 
-
-}
-
-
-
-function addChanson($idalbum,$titre,$pdo){
-echo "Chanson insérée"; 
-$sql = "INSERT INTO `chanson` ( `idalbum`, `titre`) 
-VALUES ( :idalbum,:titre);"; 
-$stmt = $pdo->prepare($sql);// prépare la requêtte SQl
-$params = [
-       'idalbum'=> $idalbum,
-       'titre'=> $titre,
-     
-       ] ;
-       // les paramètres à mettre dans la requête SQL
-
-       $result = $stmt -> execute($params); 
-       return $result;
 }
 
 ?>

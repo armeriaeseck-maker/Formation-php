@@ -14,27 +14,15 @@ $album = $_POST['album'];
 $artiste = $_POST['artiste'];
 $genre = $_POST['genre'];
 
-
 $resulte = addAlbum($album,$artiste,$genre,$pdo);
 }
 
 
 
-function addAlbum($album,$artiste,$genre,$pdo){
-echo "Album inséré"; 
-$sql = "INSERT INTO `disques` ( `album`, `artiste`, `genre`) 
-VALUES ( :album,:artiste,:genre);"; 
-$stmt = $pdo->prepare($sql);// prépare la requêtte SQl
-$params = [
-       'album'=> $album,
-       'artiste'=> $artiste,
-       'genre'=> $genre
-       ] ;
-       // les paramètres à mettre dans la requête SQL
 
-       $result = $stmt -> execute($params); 
-       return $result;
-}
+
+$genre = getGenre($pdo);
+
 
 ?>
 <body>
@@ -56,9 +44,15 @@ $params = [
         <div class="form-group">
           <label for="exampleInputtitre">Genre</label>
           <select class="form-control" name="genre" >
-              <option value="1">Rocl and roll</option>
-              <option value="2">Hard Rock</option>
-              <option value="3">Country Rock</option>
+            <?php
+          for($i=0;$i<count($genre);$i++){
+             ?>
+            <option value="<?=$genre[$i]['id'] ?>"><?= $genre[$i]['genre']?></option>
+           <?php
+           }
+           ?>
+              
+             
           </select>
         </div>
         <button type="submit" class="btn btn-primary">Ajouter</button>

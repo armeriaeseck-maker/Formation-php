@@ -43,7 +43,8 @@ function getChansons($idalbum,$pdo){
             <tr>
                 <th scope="col">#</th>
                   <th scope="col">Chanson</th>
-                  <th scope="col">Action</th>
+                  <th scope="col" colspan="2">Action</th>
+                 
             </tr>
         </thead>
         <tbody>
@@ -54,8 +55,12 @@ for($i = 0; $i < count($titres); $i++){
         <td><?= $i + 1 ?></td>
         <td><?= $titres[$i]['titre'] ?></td>
         <td>
-            <a href="edit_chanson.php?idchanson=<?php echo $titres[$i]['id']; ?>">
+            <a href="edit_chanson.php?idchanson=<?php echo $titres[$i]['id']; ?>&artiste=<?=$_GET['artiste']?>&album=<?=$_GET['album']?>&idalbum=<?=$_GET['idalbum']?>">
                  Editer Chanson
+            </a>
+            &nbsp;&nbsp;&nbsp;
+            <a href="effacer_chanson.php?idchanson=<?php echo $titres[$i]['id']; ?>&artiste=<?=$_GET['artiste']?>&album=<?=$_GET['album']?>&idalbum=<?=$_GET['idalbum']?>">
+                 Effacer Chanson
             </a>
     </td>
         
