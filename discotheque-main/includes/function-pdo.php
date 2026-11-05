@@ -143,7 +143,7 @@ function effacerAlbum($idalbum,$pdo){
     return $result;
 }
 
-
+/* 
 function effacerchanson($idchanson,$pdo){
     echo "Chanson éffacé";
     $sql = "DELETE FROM chanson  WHERE id = :idchanson;";
@@ -154,7 +154,7 @@ function effacerchanson($idchanson,$pdo){
     $stmt = $pdo->prepare($sql);
     $result = $stmt->execute($params);
     return $result;
-}
+} */
 
 //insertion dans la base de donnée
 function addUser($email,$password,$pdo){
